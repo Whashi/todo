@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AddItem } from './components/AddItem';
 import { TodoList } from './components/TodoList';
+import axios from 'axios';
 
 function App() {
 
-  const todoList = [
-    {name: "Learn Redux", id: 1},
-    {name: "Play with baby", id: 2},
-    {name: "Do dishes", id: 3}]
+  const [todoItems, setTodoItems] = useState([]);
 
-    const [todoItems, setTodoItems] = useState(todoList);
+  const [newItem, setnewItem] = useState({
+    name: ''
+});
 
-  function addItems(newItem) {
-    setTodoItems(prevItems => {
-      return [...prevItems, newItem]
-    });
+  useEffect(() => {
+    getTodoItems()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const getTodoItems = async () => {
+    const response = await axios.get('/api/v1/todolist/').catch((err) => console.log('Error:', err));
+    if(response && response.data) setTodoItems(response.data.data);
   }
 
-  function deleteTodoItem(id) {
-    setTodoItems(prevItems => {
-        return prevItems.filter(prevItem =>{
-            return prevItem.id !== id;
-        });
-    });
-}
+  const addItems = async () => {
+    await axios.post('/api/v1/todolist/', newItem).catch((err) => console.log('Error:', err));
+    getTodoItems()
+
+  }
+
+  const deleteTodoItem = async (id) => {
+    await axios.delete(`/api/v1/todolist/${id}`).catch((err) => console.log('Error:', err));
+    getTodoItems();
+  }
 
   return (
     <div className="App">
     <TodoList items={todoItems} deleteItem={deleteTodoItem}/>
-    <AddItem onAdd={addItems}/>
+    <AddItem newItem={newItem} setnewItem={setnewItem} onAdd={addItems}/>
     </div>
   );
 }

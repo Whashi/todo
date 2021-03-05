@@ -8,8 +8,8 @@ export const TodoList = (props) => {
             {props.items.map(item => {
                 return (
                     <TodoItem 
-                    key={item.id}
-                    id={item.id}
+                    key={item._id}
+                    id={item._id}
                     item={item.name}
                     deleteItem={props.deleteItem}/>
                 )

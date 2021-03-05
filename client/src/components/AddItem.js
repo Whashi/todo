@@ -2,14 +2,9 @@ import React, { useState } from 'react';
 
 export const AddItem = (props) => {
 
-    const [newItem, setnewItem] = useState({
-        name: '',
-        id: Math.floor(Math.random() * 100)
-    });
-
     function handleChange(event) {
         const { value } = event.target;
-        setnewItem((prevValue) => {
+        props.setnewItem((prevValue) => {
             return {
                 ...prevValue,
                 name: value
@@ -18,8 +13,8 @@ export const AddItem = (props) => {
     }
 
     function addItem(event) {
-        props.onAdd(newItem);
-        setnewItem({
+        props.onAdd(props.newItem);
+        props.setnewItem({
             name: '',
             id: Math.floor(Math.random() * 100)
         });
@@ -28,7 +23,7 @@ export const AddItem = (props) => {
 
     return(
         <form>
-            <input value={newItem.name} onChange={handleChange}/>
+            <input value={props.newItem.name} onChange={handleChange}/>
             <button onClick={addItem}>Add Item</button>
         </form>
     )
