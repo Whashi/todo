@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AddItem } from './components/AddItem';
 import { TodoList } from './components/TodoList';
+import { Title } from './components/Title';
 import axios from 'axios';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <div className="App">
+    <Title />
     <TodoList items={todoItems} deleteItem={deleteTodoItem}/>
     <AddItem newItem={newItem} setnewItem={setnewItem} onAdd={addItems}/>
     </div>

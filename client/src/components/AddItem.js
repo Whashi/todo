@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Add from '@material-ui/icons/Add';
 
 export const AddItem = (props) => {
 
@@ -22,9 +23,11 @@ export const AddItem = (props) => {
     }
 
     return(
-        <form>
-            <input value={props.newItem.name} onChange={handleChange}/>
-            <button onClick={addItem}>Add Item</button>
+        <form className="add-item-container">
+            <input className="add-item" value={props.newItem.name} onChange={handleChange}/>
+            <button className="input-button" onClick={addItem}>
+                <Add />
+            </button>
         </form>
     )
 }
